@@ -5,7 +5,7 @@ en:
       name: Glitch Edition
   skins:
     glitch:
-      default: Default
+      default: Mastodon (Rich Dark Mint Flavor)
 pl:
   flavours:
     glitch:
@@ -13,11 +13,3 @@ pl:
   skins:
     glitch:
       default: Domyślny
-es:
-  flavours:
-    glitch:
-      description: El diseño predeterminado para las instancias con GlitchSoc.
-      name: Glitchsoc
-  skins:
-    glitch:
-      default: Predeterminado

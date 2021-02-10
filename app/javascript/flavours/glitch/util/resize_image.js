@@ -1,5 +1,6 @@
 import EXIF from 'exif-js';
 
+<<<<<<< HEAD
 const MAX_IMAGE_PIXELS = 1638400; // 1280x1280px
 
 const _browser_quirks = {};
@@ -79,6 +80,9 @@ const checkCanvasReliability = () => new Promise((resolve, reject) => {
     img.src = testImageURL;
   }
 });
+=======
+const MAX_IMAGE_PIXELS = 6553600; // 2560x2560px
+>>>>>>> modif/main
 
 const getImageUrl = inputFile => new Promise((resolve, reject) => {
   if (window.URL && URL.createObjectURL) {
@@ -116,11 +120,15 @@ const getOrientation = (img, type = 'image/png') => new Promise(resolve => {
 
   EXIF.getData(img, () => {
     const orientation = EXIF.getTag(img, 'Orientation');
+<<<<<<< HEAD
     if (orientation !== 1) {
       dropOrientationIfNeeded(orientation).then(resolve).catch(() => resolve(orientation));
     } else {
       resolve(orientation);
     }
+=======
+    resolve(orientation);
+>>>>>>> modif/main
   });
 });
 
@@ -149,6 +157,17 @@ const processImage = (img, { width, height, orientation, type = 'image/png' }) =
 
   context.drawImage(img, 0, 0, width, height);
 
+<<<<<<< HEAD
+=======
+  // The Tor Browser and maybe other browsers may prevent reading from canvas
+  // and return an all-white image instead. Assume reading failed if the resized
+  // image is perfectly white.
+  const imageData = context.getImageData(0, 0, width, height);
+  if (imageData.every(value => value === 255)) {
+    throw 'Failed to read from canvas';
+  }
+
+>>>>>>> modif/main
   canvas.toBlob(resolve, type);
 });
 
@@ -158,8 +177,12 @@ const resizeImage = (img, type = 'image/png') => new Promise((resolve, reject) =
   const newWidth  = Math.round(Math.sqrt(MAX_IMAGE_PIXELS * (width / height)));
   const newHeight = Math.round(Math.sqrt(MAX_IMAGE_PIXELS * (height / width)));
 
+<<<<<<< HEAD
   checkCanvasReliability()
     .then(getOrientation(img, type))
+=======
+  getOrientation(img, type)
+>>>>>>> modif/main
     .then(orientation => processImage(img, {
       width: newWidth,
       height: newHeight,
@@ -170,7 +193,11 @@ const resizeImage = (img, type = 'image/png') => new Promise((resolve, reject) =
     .catch(reject);
 });
 
+<<<<<<< HEAD
 export default inputFile => new Promise((resolve) => {
+=======
+export default inputFile => new Promise((resolve, reject) => {
+>>>>>>> modif/main
   if (!inputFile.type.match(/image.*/) || inputFile.type === 'image/gif') {
     resolve(inputFile);
     return;
@@ -185,5 +212,9 @@ export default inputFile => new Promise((resolve) => {
     resizeImage(img, inputFile.type)
       .then(resolve)
       .catch(() => resolve(inputFile));
+<<<<<<< HEAD
   }).catch(() => resolve(inputFile));
+=======
+  }).catch(reject);
+>>>>>>> modif/main
 });
